@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -7,6 +8,13 @@ pipeline {
     }
 
     stages {
+        stage('Check Docker') {
+            steps {
+                sh 'docker --version'
+                sh 'docker ps'
+            }
+        }
+
         stage('Pull Docker Image') {
             steps {
                 sh 'docker pull ashish453/spotify-automation:latest'
@@ -28,13 +36,13 @@ pipeline {
                            variable: 'SPOTIFY_ARTIST_ID')
                 ]) {
                     sh '''
-                    docker run --rm ^
-                      -e SPOTIFY_CLIENT_ID ^
-                      -e SPOTIFY_CLIENT_SECRET ^
-                      -e SPOTIFY_REFRESH_TOKEN ^
-                      -e SPOTIFY_PLAYLIST_ID ^
-                      -e SPOTIFY_ARTIST_ID ^
-                      ashish453/spotify-automation:latest
+                        docker run --rm \
+                          -e SPOTIFY_CLIENT_ID \
+                          -e SPOTIFY_CLIENT_SECRET \
+                          -e SPOTIFY_REFRESH_TOKEN \
+                          -e SPOTIFY_PLAYLIST_ID \
+                          -e SPOTIFY_ARTIST_ID \
+                          ashish453/spotify-automation:latest
                     '''
                 }
             }
