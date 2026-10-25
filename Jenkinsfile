@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        SPOTIFY_APPLY_CHANGES = 'false'
+        SPOTIFY_APPLY_CHANGES = 'true'
     }
 
     stages {
