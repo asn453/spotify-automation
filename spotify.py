@@ -268,7 +268,7 @@ if __name__ == "__main__":
         print("-", track.get("name", "Unknown track"))
 
     # Step E: Collect tracks from all albums and singles.
-    print("\nCollecting all tracks of the musician...")
+    print("\nCollecting all tracks of the sai abhyankar...")
     all_tracks = get_all_artist_tracks(token)
 
     # Step F: Compare artist tracks with playlist tracks.
