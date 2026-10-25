@@ -308,14 +308,22 @@ if __name__ == "__main__":
     # Step G: Add the missing songs (asks before changing anything).
     if to_add:
         apply_changes = (
-            os.getenv("SPOTIFY_APPLY_CHANGES", "false").lower() == "true"
+            os.getenv("SPOTIFY_APPLY_CHANGES", "false").strip().lower()
+            == "true"
         )
 
-    if apply_changes:
-        add_tracks_to_playlist(token, [t["uri"] for t in to_add])
-        print("Done! Playlist updated.")
+        if apply_changes:
+            print(f"\nAdding {len(to_add)} songs to the playlist...")
+
+            add_tracks_to_playlist(
+                token,
+                [track["uri"] for track in to_add]
+            )
+
+            print("Done! Playlist updated.")
+        else:
+            print(f"\nDry run: {len(to_add)} songs would be added.")
+            print("Nothing was changed.")
+            print("Set SPOTIFY_APPLY_CHANGES=true to add songs.")
     else:
-        print("Dry run: Nothing was changed.")
-        print("Set SPOTIFY_APPLY_CHANGES=true to add songs.")
-else:
-    print("Playlist is already up to date.")
+        print("\nPlaylist is already up to date.")
