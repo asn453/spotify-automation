@@ -268,7 +268,7 @@ if __name__ == "__main__":
         print("-", track.get("name", "Unknown track"))
 
     # Step E: Collect tracks from all albums and singles.
-    print("\nCollecting all Anirudh tracks...")
+    print("\nCollecting all tracks of the musician...")
     all_tracks = get_all_artist_tracks(token)
 
     # Step F: Compare artist tracks with playlist tracks.
@@ -307,12 +307,15 @@ if __name__ == "__main__":
 
     # Step G: Add the missing songs (asks before changing anything).
     if to_add:
-        answer = input(f"\nAdd these {len(to_add)} songs to the playlist? (y/n): ")
+        apply_changes = (
+            os.getenv("SPOTIFY_APPLY_CHANGES", "false").lower() == "true"
+        )
 
-        if answer.strip().lower() == "y":
-            add_tracks_to_playlist(token, [t["uri"] for t in to_add])
-            print("Done! Playlist updated.")
-        else:
-            print("Nothing was changed.")
+    if apply_changes:
+        add_tracks_to_playlist(token, [t["uri"] for t in to_add])
+        print("Done! Playlist updated.")
     else:
-        print("Playlist is already up to date.")
+        print("Dry run: Nothing was changed.")
+        print("Set SPOTIFY_APPLY_CHANGES=true to add songs.")
+else:
+    print("Playlist is already up to date.")

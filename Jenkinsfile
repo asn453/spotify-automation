@@ -1,10 +1,13 @@
-
 pipeline {
     agent any
 
     options {
         timestamps()
         disableConcurrentBuilds()
+    }
+
+    environment {
+        SPOTIFY_APPLY_CHANGES = 'false'
     }
 
     stages {
@@ -42,6 +45,7 @@ pipeline {
                           -e SPOTIFY_REFRESH_TOKEN \
                           -e SPOTIFY_PLAYLIST_ID \
                           -e SPOTIFY_ARTIST_ID \
+                          -e SPOTIFY_APPLY_CHANGES \
                           ashish453/spotify-automation:latest
                     '''
                 }
